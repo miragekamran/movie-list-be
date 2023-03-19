@@ -11,6 +11,7 @@ exports.up = async function (knex) {
         table.string("genre", 100);
         table.boolean("popular");
         table.string("description");
+        table.binary("image");
     });
 };
 
