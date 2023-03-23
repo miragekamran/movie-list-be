@@ -10,20 +10,20 @@ exports.seed = async function (knex) {
     await knex("movies").truncate();
 
     // Read image files as buffers
-    const godfatherImageBuffer = fs.readFileSync(
-        path.join(__dirname, "/assets/godfather.jpg")
-    );
-    const dumbAndDumberImageBuffer = fs.readFileSync(
-        path.join(__dirname, "/assets/dumb_and_dumber.jpg")
-    );
-    const terminator2ImageBuffer = fs.readFileSync(
-        path.join(__dirname, "/assets/terminator2.jpg")
-    );
+    // const godfatherImageBuffer = fs.readFileSync(
+    //     path.join(__dirname, "/assets/godfather.jpg")
+    // );
+    // const dumbAndDumberImageBuffer = fs.readFileSync(
+    //     path.join(__dirname, "/assets/dumb_and_dumber.jpg")
+    // );
+    // const terminator2ImageBuffer = fs.readFileSync(
+    //     path.join(__dirname, "/assets/terminator2.jpg")
+    // );
 
     // Convert image buffers to base64-encoded strings
-    const godfatherImage = godfatherImageBuffer.toString("base64");
-    const dumbAndDumberImage = dumbAndDumberImageBuffer.toString("base64");
-    const terminator2Image = terminator2ImageBuffer.toString("base64");
+    // const godfatherImage = godfatherImageBuffer.toString("base64");
+    // const dumbAndDumberImage = dumbAndDumberImageBuffer.toString("base64");
+    // const terminator2Image = terminator2ImageBuffer.toString("base64");
 
     await knex("movies").insert([
         {
@@ -34,7 +34,7 @@ exports.seed = async function (knex) {
             popular: true,
             description:
                 "War hero Michael is the prodigal son of aging but fearsome crime patriarch Don Vito Corleone. When Michael returns home only to be thrust into an all-too-familiar world of hitmen, corrupt cops, and simmering mafia rivalries, he is forced to choose between his own path and the Corleone family legacy.",
-            image: godfatherImage,
+            image: "", // godfatherImage
         },
         {
             title: "Dumb and Dumber",
@@ -44,7 +44,7 @@ exports.seed = async function (knex) {
             popular: 0,
             description:
                 "After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen to return it.",
-            image: dumbAndDumberImage,
+            image: "", //dumbAndDumberImage
         },
         {
             title: "Terminator 2: Judgement Day",
@@ -54,7 +54,7 @@ exports.seed = async function (knex) {
             popular: null,
             description:
                 "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son, John Connor, from a more advanced and powerful cyborg.",
-            image: terminator2Image,
+            image: "", //terminator2Image
         },
     ]);
 };
