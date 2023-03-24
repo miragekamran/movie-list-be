@@ -41,7 +41,7 @@ exports.seed = async function (knex) {
             director: "The Farely Brothers",
             metascore: 76,
             genre: "Comedy",
-            popular: 0,
+            popular: false,
             description:
                 "After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen to return it.",
             image: dumbAndDumberImage,

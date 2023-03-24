@@ -16,11 +16,8 @@ function getById(id) {
     return db("movies").where("movie_id", id).first();
 }
 
-async function create(movie, image) {
-    const [id] = await db("movies").insert({
-        ...movie,
-        image: image,
-    });
+async function create(movie) {
+    const [id] = await db("movies").insert(movie);
     return getById(id);
 }
 

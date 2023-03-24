@@ -1,5 +1,8 @@
 const Movie = require("./movies-model");
 const router = require("express").Router();
+const multer = require("multer");
+
+const upload = multer({ dest: "uploads/" });
 
 router.get("/", (req, res) => {
     Movie.getAll()
@@ -29,8 +32,10 @@ router.get("/:id", (req, res) => {
         });
 });
 
-router.post("/", (req, res) => {
-    Movie.create(req.body)
+router.post("/", upload.single("pic"), (req, res) => {
+    const { body, file } = req;
+    const movie = { ...body, image: file.filename };
+    Movie.create(movie)
         .then((newMovieEntry) => {
             res.status(201).json(newMovieEntry);
         })
@@ -40,6 +45,7 @@ router.post("/", (req, res) => {
             });
         });
 });
+
 
 module.exports = router;
 
