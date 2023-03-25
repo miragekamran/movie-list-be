@@ -10,8 +10,8 @@ exports.up = async function (knex) {
         table.decimal("metascore").notNullable();
         table.string("genre", 100);
         table.boolean("popular");
-        table.string("description");
-        table.binary("image");
+        table.string("description").notNullable.unique();
+        table.binary("image").notNullable();
     });
 };
 

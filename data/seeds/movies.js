@@ -1,6 +1,3 @@
-const fs = require("fs");
-const path = require("path");
-
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
@@ -8,22 +5,6 @@ const path = require("path");
 exports.seed = async function (knex) {
     // Deletes ALL existing entries
     await knex("movies").truncate();
-
-    // Read image files as buffers
-    const godfatherImageBuffer = fs.readFileSync(
-        path.join(__dirname, "/assets/godfather.jpg")
-    );
-    const dumbAndDumberImageBuffer = fs.readFileSync(
-        path.join(__dirname, "/assets/dumb_and_dumber.jpg")
-    );
-    const terminator2ImageBuffer = fs.readFileSync(
-        path.join(__dirname, "/assets/terminator2.jpg")
-    );
-
-    // Convert image buffers to base64-encoded strings
-    const godfatherImage = godfatherImageBuffer.toString("base64");
-    const dumbAndDumberImage = dumbAndDumberImageBuffer.toString("base64");
-    const terminator2Image = terminator2ImageBuffer.toString("base64");
 
     await knex("movies").insert([
         {
@@ -34,7 +15,7 @@ exports.seed = async function (knex) {
             popular: true,
             description:
                 "War hero Michael is the prodigal son of aging but fearsome crime patriarch Don Vito Corleone. When Michael returns home only to be thrust into an all-too-familiar world of hitmen, corrupt cops, and simmering mafia rivalries, he is forced to choose between his own path and the Corleone family legacy.",
-            image: godfatherImage,
+            image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZ651J25IyTliHpDADptLvd74e2T-oEHnEKSc9XtTTNd_wfzH505o183AYwSOGsLFC5Pt6GOJa9bOxIJPInwFa9_TJdEABVb4pQ2SFD4cm-Q2VU4fyxmjrQkVNbEfTjTjN0NafE5fwOoJBrDBJgZY2mXpfKy9yvGz2QGxPEiD33BNyM452jGUu25oq/s320/godfather.jpg",
         },
         {
             title: "Dumb and Dumber",
@@ -44,7 +25,7 @@ exports.seed = async function (knex) {
             popular: false,
             description:
                 "After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen to return it.",
-            image: dumbAndDumberImage,
+            image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgN8s4NCh5G6-Az_gWfnMm0XYUT2V7CV83W63s3YvmXYQA5t9-VJUI5dVQILDVdQNCMBPt71LxsReK5AoZjps0K5WPCaxumAi2zFxt-cdZUwzWEgOTLinyU-18N1YK7NlQyCSXfWWp--XX9NZPWH7ttjoQTq-s65Gx6ZXjnhiFhsRzzKRAqtMUm8JQy/s320/dumb_and_dumber.jpg",
         },
         {
             title: "Terminator 2: Judgement Day",
@@ -54,7 +35,7 @@ exports.seed = async function (knex) {
             popular: null,
             description:
                 "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son, John Connor, from a more advanced and powerful cyborg.",
-            image: terminator2Image,
+            image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg9KYz9Kjpa2r4KLwFBoD4BlgJFidOA6D_CL4Z7gPaczoIU-UbwYkA_txVVhOt3sGhISG18sUC3gnov5Z7ry08Pdtoi59yHH4sv2QAEnmPIOiUaNwU2yJRHQ3C1hvCgyleuOZ4RT59T53KM3mYDDckhSQDs03wZOm2fVeuOvi6L2tRl78zzdXxKpfDa/s320/terminator2.jpg",
         },
     ]);
 };
