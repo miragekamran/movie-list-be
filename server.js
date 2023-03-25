@@ -1,10 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const morgan = require("morgan");
-const compression = require("compression")
-const bodyParser = require("body-parser");
-const fileUpload = require("express-fileupload");
 
 const welcomeRouter = require("./api/welcome/welcome-router")
 const moveisRouter = require("./api/movies/movies-router")
@@ -12,12 +8,9 @@ const moveisRouter = require("./api/movies/movies-router")
 const server = express()
 
 server.use(cors());
-server.use(morgan("combined"))
 server.use(helmet());
-server.use(compression());
 server.use(express.json());
-server.use(bodyParser.json());
-server.use(fileUpload());
+
 
 server.use("/api", welcomeRouter);
 server.use("/api/movies", moveisRouter)
