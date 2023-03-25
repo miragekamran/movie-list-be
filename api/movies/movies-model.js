@@ -21,8 +21,21 @@ async function create(movie) {
     return getById(id);
 }
 
+async function update(id, movie) {
+    await db("movies").where("movie_id", id).update(movie);
+    return getById(id);
+}
+
+async function remove(id) {
+    const movie = await getById(id);
+    await db("movies").where("movie_id", id).delete();
+    return movie;
+}
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
+    remove
 };

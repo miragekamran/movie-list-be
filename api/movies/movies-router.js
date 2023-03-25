@@ -42,4 +42,36 @@ router.post("/", (req, res) => {
         });
 });
 
+router.put("/:id", (req, res) => {
+    Movie.update(req.params.id, req.body)
+        .then((updatedMovie) => {
+            if (updatedMovie) {
+                res.json(updatedMovie);
+            } else {
+                res.status(404).json({ message: "Failed to update movie" });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: `Failed to update movie: ${err.message}`,
+            });
+        });
+});
+
+router.delete("/:id", (req, res) => {
+    Movie.remove(req.params.id)
+        .then((removedMovie) => {
+            if (removedMovie) {
+                res.json(removedMovie);
+            } else {
+                res.status(404).json({ message: "Failed to remove movie" });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: `Failed to remove movie: ${err.message}`,
+            });
+        });
+});
+
 module.exports = router;
