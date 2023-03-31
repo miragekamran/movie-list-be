@@ -29,6 +29,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "eslint": "^8.36.0",
     "nodemon": "^2.0.21"
   }
