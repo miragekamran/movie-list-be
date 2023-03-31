@@ -1,5 +1,6 @@
 const Movie = require("./movies-model");
 const router = require("express").Router();
+const restrict = require("../../restrict-middleware/restrict");
 
 
 router.get("/", (req, res) => {
@@ -30,7 +31,7 @@ router.get("/:id", (req, res) => {
         });
 });
 
-router.post("/", (req, res) => {
+router.post("/", restrict(), (req, res) => {
     Movie.create(req.body)
         .then((newMovieEntry) => {
             res.status(201).json(newMovieEntry);
@@ -42,7 +43,7 @@ router.post("/", (req, res) => {
         });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", restrict(), (req, res) => {
     Movie.update(req.params.id, req.body)
         .then((updatedMovie) => {
             if (updatedMovie) {
@@ -58,7 +59,7 @@ router.put("/:id", (req, res) => {
         });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", restrict(), (req, res) => {
     Movie.remove(req.params.id)
         .then((removedMovie) => {
             if (removedMovie) {

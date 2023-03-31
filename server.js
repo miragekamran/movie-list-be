@@ -3,6 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 
 const welcomeRouter = require("./api/welcome/welcome-router")
+const authRouter = require("./api/auth/auth-router")
 const moveisRouter = require("./api/movies/movies-router")
 
 const server = express()
@@ -13,6 +14,7 @@ server.use(express.json());
 
 
 server.use("/api", welcomeRouter);
+server.use("/api/auth", authRouter)
 server.use("/api/movies", moveisRouter)
 
 server.get("/", (req, res) => {
