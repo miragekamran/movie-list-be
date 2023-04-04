@@ -1,8 +1,9 @@
 const Movie = require("./movies-model");
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 
 
-router.get("/", (req, res) => {
+router.get("/", authenticateToken, (req, res) => {
     Movie.getAll()
         .then((movies) => {
             res.json(movies);
@@ -73,5 +74,20 @@ router.delete("/:id", (req, res) => {
             });
         });
 });
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) {
+        return res.status(401).json({ message: "Authentication failed" });
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).json({ message: "Authentication failed" });
+        }
+        req.user = user;
+        next();
+    });
+}
 
 module.exports = router;

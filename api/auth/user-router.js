@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const User = require("../auth/user-model");
+const db = require("../auth/user-model");
 const Movie = require("../auth/user-model");
 require("dotenv").config();
 
 const JWT_SECRET = "mysecretkey";
 
 router.get("/", (req, res) => {
-    User.find()
+    db.find()
         .then((users) => {
             res.json(users);
         })
@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-    User.findById(req.params.id)
+    db.findById(req.params.id)
         .then((user) => {
             if (user) {
                 res.json(user);
@@ -36,42 +36,62 @@ router.get("/:id", (req, res) => {
         });
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = await User.create({
-            username: req.body.username,
-            password: hashedPassword,
-        });
-        res.status(201).json({ message: "User created successfully" });
+        const { username, email } = req.body;
+
+        const user = await db.findBy({ username, email }).first();
+        if (user) {
+            return res.status(409).json({ message: "User is already taken!" });
+        } else {
+            const passHashing = bcrypt.hashSync(req.body.password, 16);
+            res.status(201).json(
+                await db.add({ ...req.body, password: passHashing })
+            );
+        }
+        console.log("User created:", req.body.username);
     } catch (err) {
-        res.status(500).json({
-            message: `Failed to register user: ${err.message}`,
-        });
+        next(err);
     }
 });
 
-router.post("/signin", async (req, res) => {
+router.post("/login", async (req, res, next) => {
+    const authError = { message: "Invalid credentials!" };
     try {
-        const user = await User.findOne({ username: req.body.username });
+        const user = await db.findBy({ username: req.body.username }).first();
         if (!user) {
-            return res.status(401).json({ message: "Authentication failed" });
+            return res.status(401).json(authError);
         }
-        const isMatch = await bcrypt.compare(req.body.password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: "Authentication failed" });
+
+        const passwordValid = await bcrypt.compare(
+            req.body.password,
+            user.password
+        );
+        console.log("User logged in:", req.body.username);
+
+        if (!passwordValid) {
+            return res.status(401).json(authError);
         }
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET);
-        res.status(200).json({ token });
+
+        const tokenPayload = {
+            userId: user.id,
+        };
+
+        res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET));
+
+        // Sign token and send it to client
+        // const token = signToken(user._id);
+        // res.json({ token });
+
+        // res.status(200).json({ message: `You are logged in ${user.username}`})
+        res.status(200).json({ message: "You logged in successfuly!" });
     } catch (err) {
-        res.status(500).json({
-            message: `Failed to sign in user: ${err.message}`,
-        });
+        next(err);
     }
 });
 
-router.post("/signout", (req, res) => {
-    res.status(200).json({ message: "User signed out successfully" });
+router.post("/logout", (req, res) => {
+    res.status(200).json({ message: "User logged out successfully" });
 });
 
 router.get("/movies", authenticateToken, async (req, res) => {
