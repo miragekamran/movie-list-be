@@ -1,11 +1,11 @@
-// const express = require("express");
+const express = require("express");
 
-// const moviesRouter = require("./movies/movies-router");
+const moviesRouter = require("./movies/movies-router");
 
-// const server = express();
+const server = express();
 
-// server.use(express.json());
+server.use(express.json());
 
-// server.use("/api/movies", moviesRouter);
+server.use("/api/movies", moviesRouter);
 
-// module.exports = server;
+module.exports = server;
