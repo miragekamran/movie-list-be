@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../auth/user-model");
 const Movie = require("../auth/user-model");
+require("dotenv").config();
 
 const JWT_SECRET = "mysecretkey";
 
