@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 
 const welcomeRouter = require("./api/welcome/welcome-router")
-// const authRouter = require("./api/users/users-router")
+const authRouter = require("./api/users/users-router")
 const moveisRouter = require("./api/movies/movies-router")
 
 const server = express()
