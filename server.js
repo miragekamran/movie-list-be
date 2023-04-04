@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 
 const welcomeRouter = require("./api/welcome/welcome-router")
-const authRouter = require("./api/auth/user-router")
+// const authRouter = require("./api/auth/user-router")
 const moveisRouter = require("./api/movies/movies-router")
 
 const server = express()
@@ -21,7 +21,7 @@ server.use(bodyParser.json());
 server.use(fileUpload());
 
 server.use("/api", welcomeRouter);
-server.use("/api/auth", authRouter);
+// server.use("/api/auth", authRouter);
 server.use("/api/movies", moveisRouter);
 
 server.get("/", (req, res) => {
