@@ -21,7 +21,7 @@ server.use(bodyParser.json());
 server.use(fileUpload());
 
 server.use("/api", welcomeRouter);
-// server.use("/api/auth", authRouter);
+server.use("/api/auth", authRouter);
 server.use("/api/movies", moveisRouter);
 
 server.get("/", (req, res) => {
