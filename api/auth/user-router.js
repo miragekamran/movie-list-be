@@ -8,6 +8,34 @@ require("dotenv").config();
 
 const JWT_SECRET = "mysecretkey";
 
+router.get("/", (req, res) => {
+    User.find()
+        .then((users) => {
+            res.json(users);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: `Faild to retrieve users: ${err.message}`,
+            });
+        });
+});
+
+router.get("/:id", (req, res) => {
+    User.findById(req.params.id)
+        .then((user) => {
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).json({ message: "Failed to retrieve user" });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: `Faild to retrieve movie: ${err.message}`,
+            });
+        });
+});
+
 router.post("/register", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
