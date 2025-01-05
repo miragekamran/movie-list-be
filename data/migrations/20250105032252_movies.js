@@ -13,6 +13,12 @@ exports.up = async function (knex) {
         table.string("description").notNullable;
         table.binary("image").notNullable();
     });
+    await knex.schema.createTable("users", (table) => {
+        table.increments("id");
+        table.string("username").unique().notNullable();
+        table.string("email").unique().notNullable();
+        table.string("password").unique().notNullable();
+    });
 };
 
 /**
@@ -20,5 +26,6 @@ exports.up = async function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function (knex) {
+    await knex.schema.dropTableIfExists("users");
     await knex.schema.dropTableIfExists("movies");
 };
