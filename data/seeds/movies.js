@@ -5,9 +5,9 @@
 exports.seed = async function (knex) {
     // Deletes ALL existing entries
     // await knex("movies").truncate();
-  
-  const movies = [
-      {
+
+    const movies = [
+        {
             title: "The Godfather",
             director: "Francis Ford Coppola",
             metascore: 100,
@@ -37,17 +37,17 @@ exports.seed = async function (knex) {
                 "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son, John Connor, from a more advanced and powerful cyborg.",
             image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg9KYz9Kjpa2r4KLwFBoD4BlgJFidOA6D_CL4Z7gPaczoIU-UbwYkA_txVVhOt3sGhISG18sUC3gnov5Z7ry08Pdtoi59yHH4sv2QAEnmPIOiUaNwU2yJRHQ3C1hvCgyleuOZ4RT59T53KM3mYDDckhSQDs03wZOm2fVeuOvi6L2tRl78zzdXxKpfDa/s320/terminator2.jpg",
         },
-  ];
+    ];
 
-  for (const movie of movies) {
-      // Check if the movie already exists
-      const existingMovie = await knex("movies")
-          .where({ title: movie.title, director: movie.director })
-          .first();
+    for (const movie of movies) {
+        // Check if the movie already exists
+        const existingMovie = await knex("movies")
+            .where({ title: movie.title, director: movie.director })
+            .first();
 
-      // If the movie does not exist, insert it
-      if (!existingMovie) {
-          await knex("movies").insert(movie);
-      }
-  }
+        // If the movie does not exist, insert it
+        if (!existingMovie) {
+            await knex("movies").insert(movie);
+        }
+    }
 };
