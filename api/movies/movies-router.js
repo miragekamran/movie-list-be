@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
         });
 });
 
-router.post("/", (req, res) => {
+router.post("/addmovie", (req, res) => {
     Movie.create(req.body)
         .then((newMovieEntry) => {
             res.status(201).json(newMovieEntry);
